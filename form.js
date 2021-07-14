@@ -43,15 +43,16 @@
     
     const promise = auth.signInWithEmailAndPassword(email, password).then(console.log("Logged IN!"));
     promise.catch(e=>alert(e.message));
-    // console.log(promise);
-    localStorage.clear();
+    console.log(promise);
+    // localStorage.clear();
+
     localStorage.setItem("isLogedIn", true);
-    window.location = "portal.html";
-    // setTimeout(() => {
-    //   console.log(isLogedIn());
-    //   if (isLogedIn() != null)
-    //   window.open('portal.html','_self');
-    // }, 2000)
+    // window.location = "portal.html";
+    setTimeout(() => {
+      console.log(isLogedIn());
+      if (isLogedIn() != null)
+      window.open('portal.html','_self');
+    }, 2000)
     
   }
 
@@ -69,6 +70,7 @@
   function isLogedIn() {
     var user = auth.currentUser;
     console.log("User: ", user);
+    return user;
   }
 
   // $( document ).ready(function() {
