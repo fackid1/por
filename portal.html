@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Leaflets Admin Portal</title>
+    <link rel="icon" href="logo_tittle.png" type="image/icon type">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+
+    <script src="https://www.gstatic.com/firebasejs/8.7.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.7.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.7.1/firebase-firestore.js"></script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <script src="form.js"></script>
+
+    <style>
+      
+    </style>
+    <link rel="stylesheet" href="portal.css">
+  </head>
+  <body>
+    <div class="testbox">
+      <!-- <form action="/"> -->
+      <div class="frm">
+        <div class="banner">
+            <div class="logo">
+                <img src="IMGlogotype.png">
+            </div>
+          <h1></h1>
+        </div>
+
+        <div class="item">
+          <label for="title">Title<span>*</span></label>
+          <input id="title" type="text" name="name" required/>
+        </div>
+        <div class="item">
+            <p>Category</p>
+            <select multiple class="item" id="cats" style="width: 100%;">
+              <option selected value="" disabled selected></option>
+              <option value="Startups" >Startups</option>
+              <option value="Business" >Business</option>
+              <option value="Opinion Pieces" >Opinion Pieces</option>
+              <option value="Individual Stories" >Individual Stories</option>
+              <option value="Trivia" >Trivia</option>
+            </select>
+        </div>
+        <div class="item">
+            <p>News Preference</p>
+            <select multiple class="item" id="pref" style="width: 100%;">
+              <option selected value="" disabled selected></option>
+              <option value="Environment Daily" >Environment Daily</option>
+              <option value="Nature and Bytes" >Nature and Bytes</option>
+              <option value="Business" >Business</option>
+              <option value="Startups" >Startups</option>
+              <option value="Environment Projects" >Environment Projects</option>
+              <option value="Institutional Work" >Institutional Work</option>
+              <option value="Think Tanks" >Think Tanks</option>
+              <option value="Analysis" >Analysis</option>
+              <option value="Reports" >Reports</option>
+              <option value="Research" >Research</option>
+              <option value="Trivia" >Trivia</option>
+              <option value="Events and Competitions">Events and Competitions</option>
+              <option value="Tech">Tech</option>
+              <option value="Individuals and Influencers">Individuals and Influencers</option>
+            </select>
+        </div>
+        <div class="item">
+            <label for="desc">Description</label>
+            <textarea id="desc" rows="4"></textarea>
+        </div>
+
+        <div class="item">
+            <label for="main_link">Full Article Link<span>*</span></label>
+            <input id="main_link" type="text" name="main_link" required/>
+        </div>
+        
+        <div class="item">
+          <label for="img">Image Url<span>*</span></label>
+          <input id="img" type="text" name="img" required/>
+        </div>
+        
+        <p><small>0/100 characters</small></p>
+        <div class="btn-block">
+          <button type="submit" id="submit_btn" href="/">Submit</button>
+        </div>
+      </div>
+      <!-- </form> -->
+
+      <!-- <div class="show_posts">
+          <h2>Posted Articles</h2>
+          <div class="article" style="display: flex; flex-direction: row;justify-content: space-around; margin-top: 10px;">
+              <p>This is the first article title.</p>
+              <button style="width: auto; height: auto; padding: 4px; font-size: small; background: #e00b;">Delete</button>
+          </div>
+          <div class="article" style="display: flex; flex-direction: row;justify-content: space-around; margin-top: 10px;">
+              <p>This is the first article title.</p>
+              <button style="width: auto; height: auto; padding: 4px; font-size: small; background: #e00b;">Delete</button>
+          </div>
+      </div> -->
+
+    </div>
+
+    <div class="footer" style="background: #00963e; color: #fff; position: relative; bottom: 0; padding: 30px;">
+        <h4 style="font-weight: 500; font-size: 1.8em; letter-spacing: 1px; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; text-align: center;">Copyright 2021, Leaflets</h4>
+    </div>
+      <script>
+        //   let title = document.getElementById("title").value;
+        //   let cats = document.getElementById("cats");
+        //   let pref = document.getElementById("pref");
+        //   let desc = document.getElementById("desc");
+        //   let main_link = document.getElementById("main_link");
+        //   let img = document.getElementById("img");
+
+        //   let pub_by = "UId";
+        //   let pub_date = "07-07-2021";
+        //   let pub_logo = "url";
+        //   let verified = true;
+
+        //   function Update(val, type) {
+        //       if (type == 'title') title = val;
+        //       else if (type == 'title') title = val; 
+        //       else if (type == 'title') title = val; 
+        //       else if (type == 'title') title = val;
+        //   }
+
+        //   Cloud Firestore Config
+        // firebase.initializeApp(firebaseConfig);
+
+        let cloudDB = firebase.firestore();
+
+        const date = new Date();
+        dt = date.getDate();
+        mn = date.getMonth() + 1;
+        yr = date.getFullYear();
+
+        // add_article();
+
+        document.getElementById("submit_btn").onclick=function(){
+            let title = document.getElementById("title").value;
+            
+            var sel_cats = [];
+            for (var option of document.getElementById('cats').options) {
+                if (option.selected) {
+                    sel_cats.push(option.value);
+                }
+            }
+
+            var sel_pref = [];
+            for (var option of document.getElementById('pref').options) {
+                if (option.selected) {
+                    sel_pref.push(option.value);
+                }
+            }
+            
+            let desc = document.getElementById("desc").value;
+            let main_link = document.getElementById("main_link").value;
+            let img = document.getElementById("img").value;
+
+            // var user;
+            // var pub_by;
+
+            // $( document ).ready(function() {
+            // //   console.log( "testing.." );
+            //   var user = auth.currentUser;
+            //   console.log("User: ", user.uid);
+            //   var pub_by = user.uid;
+            // });
+
+            let pub_by = auth.currentUser.uid;
+            let pub_date = dt + "-" + mn + "-" + yr;
+            let pub_logo = "url";
+            let verified = true;
+
+            cloudDB.collection("news").add(
+                {
+                    title: title,
+                    cats: sel_cats,
+                    pref: sel_pref,
+                    desc: desc,
+                    main_link: main_link,
+                    img: img,
+                    pub_by: pub_by,
+                    pub_date: pub_date,
+                    pub_logo: pub_logo,
+                    ver: verified,
+                }
+            ).then(
+                // console.log("Done!"),
+                title = document.getElementById("title").value = '',
+                desc = document.getElementById("desc").value = '',
+                main_link = document.getElementById("main_link").value = '',
+                img = document.getElementById("img").value = '',
+            );
+
+            
+        }
+
+      </script>
+    
+
+  </body>
+</html>
