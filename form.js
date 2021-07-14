@@ -23,20 +23,6 @@
   firebase.initializeApp(firebaseConfig);
   // firebase.analytics();
 
-  // Your web app's Firebase configuration
-  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-  // var firebaseConfig = {
-  //   apiKey: "AIzaSyBkcLrQaixp8dhiMrNfrWdJ52nyadLS4cU",
-  //   authDomain: "login-demo-254f7.firebaseapp.com",
-  //   projectId: "login-demo-254f7",
-  //   storageBucket: "login-demo-254f7.appspot.com",
-  //   messagingSenderId: "228883805517",
-  //   appId: "1:228883805517:web:db9063121d6bf3a79ab304",
-  //   measurementId: "G-C8Q2HYKHY1"
-  // };
-  // Initialize Firebase
-  // firebase.initializeApp(firebaseConfig);
-
   const auth =  firebase.auth();
 
   //signup function
@@ -58,11 +44,14 @@
     const promise = auth.signInWithEmailAndPassword(email, password).then(console.log("Logged IN!"));
     promise.catch(e=>alert(e.message));
     // console.log(promise);
-    setTimeout(() => {
-      console.log(isLogedIn());
-      if (isLogedIn() != null)
-      window.open('portal.html','_self');
-    }, 2000)
+    localStorage.clear();
+    localStorage.setItem("isLogedIn", true);
+    window.location = "portal.html";
+    // setTimeout(() => {
+    //   console.log(isLogedIn());
+    //   if (isLogedIn() != null)
+    //   window.open('portal.html','_self');
+    // }, 2000)
     
   }
 
@@ -71,6 +60,9 @@
 
   function signOut(){
     auth.signOut();
+    localStorage.clear();
+    localStorage.setItem("isLogedIn", false);
+    location.reload();
     alert("SignOut Successful from System");
   }
 

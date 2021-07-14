@@ -103,6 +103,10 @@
 
     <div class="footer" style="background: #00963e; color: #fff; position: relative; bottom: 0; padding: 30px;">
         <h4 style="font-weight: 500; font-size: 1.8em; letter-spacing: 1px; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; text-align: center;">Copyright 2021, Leaflets</h4>
+
+        <div class="btn-block">
+            <button type="submit" onclick="signOut()" id="submit_btn" href="/">Logout</button>
+        </div>
     </div>
       <script>
         //   let title = document.getElementById("title").value;
@@ -196,6 +200,12 @@
             
         }
 
+      </script>
+
+      <script>
+          if (localStorage.getItem("isLogedIn") == "false") {
+              window.location = "/";
+          }
       </script>
     
 
