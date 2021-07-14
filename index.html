@@ -106,5 +106,11 @@
 <!--===============================================================================================-->
 	<script src="js/main.js"></script>
 
+    <script>
+        if (localStorage.getItem("isLogedIn") == "true") {
+              window.location = "portal.html";
+        }
+    </script>
+
 </body>
 </html>
