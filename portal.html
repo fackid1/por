@@ -36,7 +36,7 @@
         </div>
         <div class="item">
             <p>Category</p>
-            <select multiple class="item" id="cats" style="width: 100%;">
+            <select class="item" id="cats" style="width: 100%;">
               <option selected value="" disabled selected></option>
               <option value="Startups" >Startups</option>
               <option value="Business" >Business</option>
@@ -143,12 +143,12 @@
         document.getElementById("submit_btn").onclick=function(){
             let title = document.getElementById("title").value;
             
-            var sel_cats = [];
-            for (var option of document.getElementById('cats').options) {
-                if (option.selected) {
-                    sel_cats.push(option.value);
-                }
-            }
+            var sel_cats = document.getElementById('cats').value;
+            // for (var option of document.getElementById('cats').options) {
+            //     if (option.selected) {
+            //         sel_cats.push(option.value);
+            //     }
+            // }
 
             var sel_pref = [];
             for (var option of document.getElementById('pref').options) {
