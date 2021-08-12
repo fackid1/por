@@ -177,28 +177,34 @@
             let pub_logo = "url";
             let verified = true;
 
-            cloudDB.collection("news").add(
-                {
-                    title: title,
-                    cats: sel_cats,
-                    pref: sel_pref,
-                    desc: desc,
-                    main_link: main_link,
-                    img: img,
-                    pub_by: pub_by,
-                    pub_date: source,
-                    // pub_date: pub_date,
-                    pub_logo: pub_logo,
-                    ver: verified,
-                }
-            ).then(
-                // console.log("Done!"),
-                title = document.getElementById("title").value = '',
-                desc = document.getElementById("desc").value = '',
-                main_link = document.getElementById("main_link").value = '',
-                img = document.getElementById("img").value = '',
-            );
 
+            console.log(sel_pref.length);
+            if (title != "" && sel_pref.length != 0 && desc != "" && source != "" && main_link != "" && img != "") {
+              cloudDB.collection("news").add(
+                  {
+                      title: title,
+                      cats: sel_cats,
+                      pref: sel_pref,
+                      desc: desc,
+                      main_link: main_link,
+                      img: img,
+                      pub_by: pub_by,
+                      pub_date: source,
+                      // pub_date: pub_date,
+                      pub_logo: pub_logo,
+                      ver: verified,
+                  }
+              ).then(
+                  // console.log("Done!"),
+                  title = document.getElementById("title").value = '',
+                  desc = document.getElementById("desc").value = '',
+                  main_link = document.getElementById("main_link").value = '',
+                  img = document.getElementById("img").value = '',
+                  source = document.getElementById("source").value = '',
+              );
+              } else {
+                  alert("Please fill all the fields.")
+              }
             
         }
 
