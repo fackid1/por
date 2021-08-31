@@ -80,7 +80,7 @@
           <input id="img" type="text" name="img" required/>
         </div>
         
-        <p><small>0/100 characters</small></p>
+        <!-- <p><small>0/100 characters</small></p> -->
         <div class="btn-block">
           <button type="submit" id="submit_btn" href="/">Submit</button>
         </div>
@@ -107,6 +107,14 @@
         <div class="btn-block">
             <button type="submit" onclick="signOut()" id="submit_btn" href="/">Logout</button>
         </div>
+
+        <!-- <div class="btn-block">
+            <button type="submit" onclick="addData()" id="submit_btn" href="/">Add</button>
+        </div> -->
+
+        <!-- <div class="btn-block">
+            <button type="submit" onclick="test()" id="submit_btn" href="/">Test Button</button>
+        </div> -->
     </div>
       <script>
         //   let title = document.getElementById("title").value;
@@ -177,6 +185,8 @@
             let pub_logo = "url";
             let verified = true;
 
+            var date = new Date().getTime();
+
 
             console.log(sel_pref.length);
             if (title != "" && sel_pref.length != 0 && desc != "" && source != "" && main_link != "" && img != "") {
@@ -190,7 +200,7 @@
                       img: img,
                       pub_by: pub_by,
                       pub_date: source,
-                      // pub_date: pub_date,
+                      date: date,
                       pub_logo: pub_logo,
                       ver: verified,
                   }
@@ -207,6 +217,34 @@
               }
             
         }
+
+        // function addData() {
+
+        //   cloudDB.collection("news").get()
+        //   .then((querySnapshot) => {
+        //     querySnapshot.forEach(doc => {
+        //       console.log(doc.id, " => ", doc.data());
+        //       var date = new Date().getTime();
+        //       var abcd = cloudDB.collection("news").doc(doc.id)
+        //       .set({date: date}, { merge: true });
+        //     })
+            
+        //   }).catch((e) => {
+        //       console.log(e);
+        //     });;
+        //   // console.log(cloudDB.collection("news_t").get());
+        // }
+
+        // function test() {
+        //   var date = new Date().getTime();
+        //   console.log(date);
+        //   cloudDB.collection("news_t").orderBy('date', 'desc').get()
+        //   .then((qs) => {
+        //     qs.forEach(doc => {
+        //       console.log(doc.id, " => ", doc.data());
+        //     })
+        //   });
+        // }
 
       </script>
 
